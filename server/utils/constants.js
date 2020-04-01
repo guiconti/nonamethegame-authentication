@@ -36,4 +36,9 @@ module.exports = {
   tables: {
     USERS: 'Users',
   },
+  selections: {
+    USER_WITH_ONLY_ID_DATA: ['_id'],
+    USER_WITH_PROFILE_DATA: ['_id', 'name', 'email'],
+    USER_WITH_PASSWORD_DATA: ['_id', 'password'],
+  },
 };
