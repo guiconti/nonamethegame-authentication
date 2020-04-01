@@ -11,6 +11,7 @@ const controllers = retrieveControllers(
 );
 const schemas = retrieveSchemas(__filename.split('/routers')[1].split('.')[0]);
 
+router.post(constants.endpoints.SIGN_IN, schemas.signIn, controllers.signIn);
 router.post(
   constants.endpoints.REGISTER,
   schemas.register,
