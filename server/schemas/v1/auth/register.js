@@ -1,7 +1,18 @@
 const joi = require('joi');
 
 const schema = joi.object().keys({
-  example: joi.string().required(),
+  email: joi
+    .string()
+    .email({ minDomainSegments: 2 })
+    .required(),
+  name: joi
+    .string()
+    .min(3)
+    .required(),
+  password: joi
+    .string()
+    .min(4)
+    .required(),
 });
 
 module.exports = (req, res, next) => {

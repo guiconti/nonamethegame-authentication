@@ -1,4 +1,6 @@
+
 const express = require('express');
+const constants = require('../../../utils/constants');
 const retrieveControllers = require('../../../utils/retrieveControllers');
 const retrieveSchemas = require('../../../utils/retrieveSchemas');
 
@@ -9,9 +11,10 @@ const controllers = retrieveControllers(
 );
 const schemas = retrieveSchemas(__filename.split('/routers')[1].split('.')[0]);
 
-//  Notification APIs
-router.get('/hi', controllers.hi);
-
-router.post('/hey', schemas.hey, controllers.hey);
+router.post(
+  constants.endpoints.REGISTER,
+  schemas.register,
+  controllers.register
+);
 
 module.exports = router;
