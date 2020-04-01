@@ -13,6 +13,7 @@ mongoose.connect(DB_HOST, {
   auto_reconnect: true,
   useNewUrlParser: true,
   useCreateIndex: true,
+  useUnifiedTopology: true,
 });
 
 const database = mongoose.connection;
@@ -34,6 +35,7 @@ database.on('disconnected', () => {
     auto_reconnect: true,
     useNewUrlParser: true,
     useCreateIndex: true,
+    useUnifiedTopology: true,
   });
 });
 
