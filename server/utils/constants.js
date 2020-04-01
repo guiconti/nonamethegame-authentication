@@ -32,6 +32,7 @@ module.exports = {
   endpoints: {
     REGISTER: '/register',
     SIGN_IN: '/sign_in',
+    SIGN_OUT: '/sign_out',
   },
   tables: {
     USERS: 'Users',
