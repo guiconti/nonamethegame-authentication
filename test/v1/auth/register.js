@@ -16,19 +16,16 @@ const path = `/v1/auth/register`;
 
 module.exports = describe(`Register V1`, () => {
   const createdUser = {
-    name: faker.random.word(30),
     email: faker.internet.email(),
     password: faker.random.word(30),
   };
   const userToBeCreated = {
-    name: faker.random.word(30),
     email: faker.internet.email(),
     password: faker.random.word(30),
   };
 
   before(done => {
     new database.Users({
-      name: createdUser.name,
       email: createdUser.email,
       password: hasher(
         createdUser.password,
@@ -80,46 +77,10 @@ module.exports = describe(`Register V1`, () => {
       });
   });
 
-  it(`Should return 400 when no name is sent`, done => {
-    api
-      .post(path)
-      .send({
-        email: faker.internet.email(),
-        password: faker.random.word(6),
-      })
-      .end((err, res) => {
-        if (err) {
-          done(err);
-        } else {
-          expect(res.status, 'Status').to.equal(400);
-          done();
-        }
-      });
-  });
-
-  it(`Should return 400 when name sent is below 3 characters`, done => {
-    api
-      .post(path)
-      .send({
-        name: faker.random.alphaNumeric(2),
-        email: faker.internet.email(),
-        password: faker.random.alphaNumeric(6),
-      })
-      .end((err, res) => {
-        if (err) {
-          done(err);
-        } else {
-          expect(res.status, 'Status').to.equal(400);
-          done();
-        }
-      });
-  });
-
   it(`Should return 400 when no email is sent`, done => {
     api
       .post(path)
       .send({
-        name: faker.random.alphaNumeric(6),
         password: faker.random.alphaNumeric(6),
       })
       .end((err, res) => {
@@ -136,7 +97,6 @@ module.exports = describe(`Register V1`, () => {
     api
       .post(path)
       .send({
-        name: faker.random.alphaNumeric(6),
         email: faker.random.alphaNumeric(6),
         password: faker.random.alphaNumeric(6),
       })
@@ -154,8 +114,7 @@ module.exports = describe(`Register V1`, () => {
     api
       .post(path)
       .send({
-        name: faker.random.alphaNumeric(6),
-        username: faker.internet.email(),
+        email: faker.internet.email(),
       })
       .end((err, res) => {
         if (err) {
@@ -171,8 +130,7 @@ module.exports = describe(`Register V1`, () => {
     api
       .post(path)
       .send({
-        name: faker.random.alphaNumeric(6),
-        username: faker.internet.email(),
+        email: faker.internet.email(),
         password: faker.random.alphaNumeric(2),
       })
       .end((err, res) => {

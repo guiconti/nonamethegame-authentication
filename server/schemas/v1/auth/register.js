@@ -5,10 +5,6 @@ const schema = joi.object().keys({
     .string()
     .email({ minDomainSegments: 2 })
     .required(),
-  name: joi
-    .string()
-    .min(3)
-    .required(),
   password: joi
     .string()
     .min(4)

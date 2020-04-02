@@ -10,7 +10,6 @@
  * @apiParamExample {json} Request-example:
     {
       "email": "milkao@milk.com.br",
-      "name": "Milk"
       "password": "jaca123"
     }
  * @apiSuccess (201) {String} data User data.
@@ -19,7 +18,6 @@
       "data": {
         "_id": "1",
         "email": "milkao@bendev.com",
-        "name": "Milk",
         "__v": 0
       }
     }
@@ -42,11 +40,10 @@ const insertDatabase = require('../../../utils/insertDatabase');
 const generateSession = require('../../../utils/generateSession');
 
 module.exports = (req, res, next) => {
-  let { email, name, password } = req.body;
+  let { email, password } = req.body;
   email = email.trim();
-  name = name.trim();
   password = hasher(password, constants.values.cryptography.PASSWORD_KEY);
-  const newUser = { email, name, password };
+  const newUser = { email, password };
   return insertDatabase(constants.tables.USERS, newUser)
     .then(newRegister => {
       const jwt = generateSession(
