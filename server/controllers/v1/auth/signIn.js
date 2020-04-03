@@ -46,14 +46,14 @@ module.exports = (req, res, next) => {
 
   findDatabase(constants.tables.USERS, { email, password }, constants.selections.USER_WITH_ONLY_ID_DATA, 0, 1)
     .then(user => {
-      const jwt = generateSession(
+      const session = generateSession(
         user._id,
         constants.values.cryptography.TOKEN_KEY,
         constants.values.cryptography.SESSION_SIGNATURE_KEY,
         constants.values.EXPIRATION_TIME_IN_SECONDS
       );
 
-      res.cookie(constants.values.cookies.SESSION, jwt, {
+      res.cookie(constants.values.cookies.SESSION, session, {
         domain: constants.values.cookies.DOMAIN,
         expires: new Date(
           Date.now() + constants.values.EXPIRATION_TIME_IN_SECONDS * 1000
@@ -61,7 +61,7 @@ module.exports = (req, res, next) => {
       });
 
       return res.status(200).json({
-        data: user,
+        data: { ...user, session }
       });
     })
     .catch(err => {

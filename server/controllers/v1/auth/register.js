@@ -46,14 +46,14 @@ module.exports = (req, res, next) => {
   const newUser = { email, password };
   return insertDatabase(constants.tables.USERS, newUser)
     .then(newRegister => {
-      const jwt = generateSession(
+      const session = generateSession(
         newRegister._id,
         constants.values.cryptography.TOKEN_KEY,
         constants.values.cryptography.SESSION_SIGNATURE_KEY,
         constants.values.EXPIRATION_TIME_IN_SECONDS
       );
 
-      res.cookie(constants.values.cookies.SESSION, jwt, {
+      res.cookie(constants.values.cookies.SESSION, session, {
         domain: constants.values.cookies.DOMAIN,
         expires: new Date(
           Date.now() + constants.values.EXPIRATION_TIME_IN_SECONDS * 1000
@@ -62,7 +62,7 @@ module.exports = (req, res, next) => {
 
       delete newRegister.password;
       return res.status(201).json({
-        data: newRegister,
+        data: { ...newRegister, session },
       });
     })
     .catch(err => {
